@@ -44,7 +44,7 @@ async function main() {
         }
 
     });
-
+    // The way institutions do it is to find the closing price of each day not highest, but Well.
 
   
 
@@ -53,12 +53,26 @@ async function main() {
         type: 'bar',
         data: {
             labels: stocks.map(value => value.meta.symbol),
-            datasets: stocks.map(stock => ({
+            datasets: [{
                 label: 'highest',
                 data: stocks.map(value => getHighest(value)),
-                backgroundColor: getColor(stock.meta.symbol),
-                borderColor: getColor(stock.meta.symbol)
-            }))
+                backgroundColor: stocks.map(value=>getColor(value.meta.symbol)),
+                borderColor: stocks.map(value=>getColor(value.meta.symbol)),
+            }]
+        
+        }
+    });
+
+    new Chart(averagePriceChartCanvas.getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: stocks.map(value => value.meta.symbol),
+            datasets: [{
+                label: stocks.map(value=>value.meta.symbol),
+                data: stocks.map(value => getAverage(value)),
+                backgroundColor: stocks.map(value=>getColor(value.meta.symbol)),
+                borderColor: stocks.map(value=>getColor(value.meta.symbol)),
+            }]
         }
     });
 
@@ -96,18 +110,17 @@ async function main() {
 
 
     function getAverage(stock) {
-        let dailyAvg
+       
         let sumAvg = 0
         avgdays = stock.values.map(value => parseFloat(value.high))
         avgdays.forEach(dailyAvg => {
             sumAvg = dailyAvg + sumAvg
-            console.log(sumAvg)
+          
         })
         averagePrice = sumAvg / avgdays.length
-        console.log('average is ' + averagePrice)
+    return averagePrice
     }
-    getAverage(GME)
-
+    
 
 }
 main()
