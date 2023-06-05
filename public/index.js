@@ -44,50 +44,25 @@ async function main() {
         }
 
     });
-    
+    // The way institutions do it is to find the closing price of each day not highest, but Well.
 
-    function getHighest(stock) {
-
-        let highest = 0
-        let days = stock.values.map(value => parseFloat(value.high))
-        days.forEach(dayValue => {
-            if (dayValue >= highest) {
-                highest = dayValue
-            } else {
-                highest = highest
-            }
-
-        })
-       return highest
-    }
-
-    
-
-    function getAverage(stock){
-        let dayAvg=0
-       let avgdays = stock.values.map(value => parseFloat(value.close))
-   
-        avgdays.forEach(dayAvg => {
-            dayAvg = dayAvg + dayAvg
-        })
-        console.log(dayAvg+stock)
-        }
+  
 
 
     new Chart(highestPriceChartCanvas.getContext('2d'), {
         type: 'bar',
         data: {
-            labels: stocks.map(value=>value.meta.symbol),
-            datasets: stocks.map(stock=>({
+            labels: stocks.map(value => value.meta.symbol),
+            datasets: stocks.map(stock => ({
                 label: 'highest',
                 data: stocks.map(value => getHighest(value)),
-                backgroundColor:  getColor(stock.meta.symbol),
+                backgroundColor: getColor(stock.meta.symbol),
                 borderColor: getColor(stock.meta.symbol)
             }))
         }
     });
 
-  
+
     function getColor(stock) {
         if (stock === "GME") {
             return 'rgba(61, 161, 61, 0.7)'
@@ -102,6 +77,36 @@ async function main() {
             return 'rgba(166, 43, 158, 0.7)'
         }
     }
+
+    function getHighest(stock) {
+
+        let highest = 0
+        let days = stock.values.map(value => parseFloat(value.high))
+        days.forEach(dayValue => {
+            if (dayValue >= highest) {
+                highest = dayValue
+            } else {
+                highest = highest
+            }
+
+        })
+        return highest
+    }
+
+
+
+    function getAverage(stock) {
+        let dailyAvg
+        let sumAvg = 0
+        avgdays = stock.values.map(value => parseFloat(value.high))
+        avgdays.forEach(dailyAvg => {
+            sumAvg = dailyAvg + sumAvg
+            console.log(sumAvg)
+        })
+        averagePrice = sumAvg / avgdays.length
+        console.log('average is ' + averagePrice)
+    }
+    getAverage(GME)
 
 
 }
