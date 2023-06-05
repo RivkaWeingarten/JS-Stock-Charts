@@ -112,7 +112,7 @@ async function main() {
     function getAverage(stock) {
        
         let sumAvg = 0
-        avgdays = stock.values.map(value => parseFloat(value.high))
+        avgdays = stock.values.map(value => parseFloat(value.close))
         avgdays.forEach(dailyAvg => {
             sumAvg = dailyAvg + sumAvg
           
