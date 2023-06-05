@@ -44,7 +44,7 @@ async function main() {
         }
 
     });
-    // The way institutions do it is to find the closing price of each day not highest, but Well.
+   
 
   
 
@@ -68,7 +68,7 @@ async function main() {
         data: {
             labels: stocks.map(value => value.meta.symbol),
             datasets: [{
-                label: stocks.map(value=>value.meta.symbol),
+                //label: stocks.map(value=>value.meta.symbol),
                 data: stocks.map(value => getAverage(value)),
                 backgroundColor: stocks.map(value=>getColor(value.meta.symbol)),
                 borderColor: stocks.map(value=>getColor(value.meta.symbol)),
