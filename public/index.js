@@ -44,7 +44,7 @@ async function main() {
         }
 
     });
-    // The way institutions do it is to find the closing price of each day not highest, but Well.
+
 
   
 
